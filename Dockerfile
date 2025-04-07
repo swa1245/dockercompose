@@ -1,4 +1,4 @@
-FROM node:20-apline
+FROM node:20-alpine
 
 WORKDIR /app
 
@@ -10,9 +10,11 @@ RUN npm install
 COPY . .
 
 ENV DATABASE_URL="postgresql://postgres:mysecret@host.docker.internal:5432/postgres"
-RUN npx prisma migrate dev
-RUN npx prisma generate
 
+RUN npx prisma generate
 RUN npm run build
 
-CMD [ "npm","start" ]
+EXPOSE 3000
+
+# Run migrations during container startup, not build
+CMD npx prisma migrate dev && npm start
