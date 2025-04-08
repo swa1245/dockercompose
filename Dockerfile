@@ -9,7 +9,7 @@ RUN npm install
 
 COPY . .
 
-ENV DATABASE_URL="postgresql://postgres:mysecret@host.docker.internal:5432/postgres"
+ENV DATABASE_URL="postgresql://postgres:mysecret@localhost.docker.internal:5432/postgres"
 
 RUN npx prisma generate
 RUN npm run build
